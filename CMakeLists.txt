@@ -56,7 +56,6 @@ endforeach()
 
 # Compiler flags
 set(CSTANDARD "-std=gnu99")
-set(CDEBUG    "-gstabs -g -ggdb")
 set(CWARN     "-Wall -Wstrict-prototypes -Wl,--gc-sections -Wl,--relax")
 set(CTUNING   "-funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections")
 set(COPT      "-Os -lm -lprintf_flt")
@@ -79,7 +78,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}.el
 add_custom_target(strip ALL     ${AVRSTRIP} "${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})
 add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.hex" DEPENDS strip)
 add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.eeprom" DEPENDS strip)
-add_custom_target(flash ${AVRDUDE} -c ${PROGRAMMER} -p ${AVR_MCU} -U flash:w:${PROJECT_NAME}.hex)
+add_custom_target(flash         ${AVRDUDE} -c ${PROGRAMMER} -p ${AVR_MCU} -U flash:w:${PROJECT_NAME}.hex)
 add_custom_target(size          ${AVRSIZE} "${PROJECT_NAME}.elf" DEPENDS strip)
 
 
